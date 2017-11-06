@@ -1,1 +1,0 @@
-root to: 'static#index'`
