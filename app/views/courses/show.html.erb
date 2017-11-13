@@ -17,3 +17,42 @@
 
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>
+
+<p id="notice"><%= notice %></p>
+
+<h1><%= @course.name %></h1>
+<h4><%= @course.code %></h4>
+<p><%= @course.description %></p>
+
+<% if logged_in? %>
+  <% unless current_student.follows?(@course) %>
+    <%= link_to( "Zapisz się do kursu", action: :follow) %>
+  <% else %>
+    <%= link_to( "Wypisz się z kursu", action: :unfollow) %>
+  <% end %>
+<% end %>
+
+
+<hr>
+<h1>Zapisani studenci</h1>
+<ul>
+<% @course.students.each do |student| %>
+  <li><%= link_to student.name, student %></li>
+<% end %>
+</ul>
+
+<hr>
+<% @course.topics.each do |topic| %>
+  <h4><%= topic.title %> by <%= topic.student.name %></h4>
+  <% topic.posts.each do |post| %>
+    <p>
+      <%= post.body %>
+    </p>
+    <h6>by <%= post.student.name %></h6>
+  <% end %>
+<% end %>
+
+<hr>
+
+<%= link_to 'Edit', edit_course_path(@course) %> |
+<%= link_to 'Back', courses_path %>
